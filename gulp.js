@@ -1,4 +1,4 @@
-gulp.task('sass', function () {
+gulp.task('heroku', function () {
 	return gulp.src(SCSS_SRC)
 		.pipe(wait(500))
 		.pipe(sass({
