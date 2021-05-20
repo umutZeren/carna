@@ -4,8 +4,11 @@ import {UserContext} from '../../../src/Contexts/UserContext'
 
 const UserList=() =>{
     const {users}=useContext(UserContext);
-    console.log(users);
-    return(
+    if(!users)
+    return(<div></div>)
+    else{
+        console.log("users", users);
+        return(
     <   > 
         <div className="table-title">
             <div className="row">
@@ -30,7 +33,7 @@ const UserList=() =>{
             </thead>
             <tbody>
             {
-                        users["users"].map(usr => (
+                        users.map(usr => (
                                 <tr key={usr.user_id}>
                                     <User users={usr}/>
                                 </tr>
@@ -40,7 +43,7 @@ const UserList=() =>{
             </tbody>
         </table>  
     </>  
-    ) 
+    ) }
 }
 
 export default UserList;
