@@ -15,13 +15,28 @@ const UserContextProvider = (props) =>{
         useEffect( ()=>{
                 axios.get(url)
                 .then(response=> setUsers(response.data))
-                //.then(response =>(console.log("this USEEER",response)))
-              // .catch(error=> console.log(error));
-            },[url]);
-          //  console.log("this is users",users);
-          //useEffect();
+                .catch(error=> console.log(error));
+            },[]);
+
+           const  addEmployee=((name, email, address, phone) => {
+            console.log("inside this bro");
+            setUsers(users,
+            axios.post(url,{ "username": name,
+            "password": "edf",
+            "gender": "M",
+            "age": 49,
+            "email": email}).then(response=> {
+            users.push(response.data);
+            }).catch((error) => {
+              if(error.response)
+                console.log(error);
+           
+            }))
+           });
+        
+
      return(
-        <UserContext.Provider value={{users}}>
+        <UserContext.Provider value={{users ,addEmployee}}>
             {props.children}
         </UserContext.Provider>)
 

@@ -3,7 +3,7 @@ const Users = ({users}) =>{
     return (
         <>
           <td>
-            {users.user_id}
+            {users.id}
             </td>
             <td>
                 {users.username}
@@ -16,6 +16,8 @@ const Users = ({users}) =>{
             </td>
             <td>
             {users.email}
+            </td>
+            <td>
             </td>
             <td>
                     <a href="#editEmployeeModal" className="edit" data-toggle="modal"><i className="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
