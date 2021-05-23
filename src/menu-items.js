@@ -40,6 +40,12 @@ export default {
                             url: '/Demo/Crud'
                         },
                         {
+                            id: 'Courses',
+                            title: 'Manage Courses',
+                            type: 'item',
+                            url: '/Demo/CrudCourses'
+                        },
+                        {
                             id: 'badges',
                             title: 'Badges',
                             type: 'item',

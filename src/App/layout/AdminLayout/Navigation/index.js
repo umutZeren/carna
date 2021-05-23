@@ -106,9 +106,9 @@ class Navigation extends Component {
         }
 
         let navContent = (
-            <div className="navbar-wrapper">
-                <NavLogo collapseMenu={this.props.collapseMenu} windowWidth={this.props.windowWidth} onToggleNavigation={this.props.onToggleNavigation} />
-                <NavContent navigation={navigation.items} />
+           <div className="navbar-wrapper">
+             <NavLogo collapseMenu={this.props.collapseMenu} windowWidth={this.props.windowWidth} onToggleNavigation={this.props.onToggleNavigation} />
+                <NavContent navigation={navigation.items}  />
             </div>
         );
         if (this.props.windowWidth < 992) {

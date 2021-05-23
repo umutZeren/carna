@@ -54,12 +54,14 @@ class AdminLayout extends Component {
                     )} />
             ) : (null);
         });
-
+        var login=false;
         return (
+           /* <Login> </Login>*/
             <Aux>
                 <Fullscreen enabled={this.props.isFullScreen}>
                     <Navigation />
-                    <NavBar />
+                    <NavBar />)
+                
                     <div className="pcoded-main-container" onClick={() => this.mobileOutClickHandler}>
                         <div className="pcoded-wrapper">
                             <div className="pcoded-content">

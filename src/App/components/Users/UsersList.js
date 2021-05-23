@@ -1,12 +1,12 @@
 import React , {useContext,useEffect,useState } from 'react'
 import { Modal, Button, Alert} from 'react-bootstrap';
 import User from './User';
-import {UserContext} from '../../../src/Contexts/UserContext'
+import {UserContext} from '../../../Contexts/UserContext'
 import AddForm from './AddForm';
-import Pagination from './Pagination';
+import Pagination from '../Pagination';
+
 const UserList=() =>{
     const {users}=useContext(UserContext);
-
     const [showAlert, setShowAlert] = useState(false);
     const [show, setShow] = useState(false);
 
@@ -16,12 +16,17 @@ const UserList=() =>{
     const [currentPage, setCurrentPage] = useState(1);
     const [employeesPerPage] = useState(5);
 
+    useEffect(() =>{
+        handleClose();
+    },[users]) 
+    
     const handleShowAlert = () => {
         setShowAlert(true);
         setTimeout(()=> {
             setShowAlert(false);
         }, 2000)
     }
+
 
     useEffect(() => {
         handleClose();
@@ -36,7 +41,9 @@ const UserList=() =>{
     if(!users)
     return(<div></div>)
     else{
-        
+    users.sort(function(a, b){
+        return a.id - b.id;
+    });
     const indexOfLastEmployee = currentPage * employeesPerPage;
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
     const currentUsers= users.slice(indexOfFirstEmployee, indexOfLastEmployee);
@@ -71,7 +78,7 @@ const UserList=() =>{
             {
                         currentUsers.map(usr => (
                                 <tr key={usr.id}>
-                                    <User users={usr}/>
+                                    <User user={usr}/>
                                 </tr>
                             ) )
             }
@@ -87,7 +94,7 @@ const UserList=() =>{
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
             <Modal.Title>
-                Add Employee
+                Add User
             </Modal.Title>
         </Modal.Header>
         <Modal.Body>

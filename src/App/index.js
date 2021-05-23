@@ -10,7 +10,7 @@ import ScrollToTop from './layout/ScrollToTop';
 import routes from "../route";
 
 const AdminLayout = Loadable({
-    loader: () => import('./layout/AdminLayout'),
+    loader: () => import('../Demo/Login/Login'),
     loading: Loader
 });
 

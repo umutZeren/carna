@@ -1,4 +1,4 @@
-import React,{lazy} from 'react';
+import React from 'react';
 import $ from 'jquery';
 
 window.jQuery = $;
@@ -25,11 +25,12 @@ const GoogleMap = React.lazy(() => import('./Demo/Maps/GoogleMap/index'));
 
 const OtherSamplePage = React.lazy(() => import('./Demo/Other/SamplePage'));
 const OtherDocs = React.lazy(() => import('./Demo/Other/Docs'));
-const newPage = lazy(()=> import('./Demo/Crud'));
-
+const newPage = React.lazy(()=> import('./Demo/Crud'));
+const CrudCourses = React.lazy(()=> import('./Demo/CrudCourses'));
+const Login =React.lazy(()=> import('./Demo/Login/Login'));
 const routes = [
-    { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
     { path: '/basic/button', exact: true, name: 'Basic Button', component: UIBasicButton },
+    { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
     { path: '/basic/badges', exact: true, name: 'Basic Badges', component: UIBasicBadges },
     { path: '/basic/breadcrumb-paging', exact: true, name: 'Basic Breadcrumb Pagination', component: UIBasicBreadcrumbPagination },
     { path: '/basic/collapse', exact: true, name: 'Basic Collapse', component: UIBasicCollapse },
@@ -41,7 +42,9 @@ const routes = [
     { path: '/maps/google-map', exact: true, name: 'Google Map', component: GoogleMap },
     { path: '/sample-page', exact: true, name: 'Sample Page', component: OtherSamplePage },
     { path: '/docs', exact: true, name: 'Documentation', component: OtherDocs },
-    {path:'/Demo/Crud',exact:true,name:'new page',component:newPage}
+    {path:'/Demo/Crud',exact:true,name:'new page',component:newPage},
+    {path:'/Demo/CrudCourses',exact:true,name:'Courses',component:CrudCourses},
+    {path:'/Demo/Login/Login',exact:true,name:'Login',component:Login}
 
 ];
 

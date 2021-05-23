@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 const Pagination = ({pages, setCurrentPage, currentUsers, users}) => {
 
     const numOfPages = [];
+    console.log("users",users );
 
     for (let i=1; i <= pages; i++) {
         numOfPages.push(i);
@@ -33,7 +34,7 @@ const Pagination = ({pages, setCurrentPage, currentUsers, users}) => {
 
 }
 
-<li className={`${currentButton === numOfPages.length ? 'page-item disabled' : 'page-item' }`}><a href="#!"
+<li className= { `${currentButton === numOfPages.length ? 'page-item disabled' : 'page-item' }`  } ><a href="#!"
                 onClick = { () => setCurrentButton((next) => next === numOfPages.length ? next : next + 1)}
             >Next</a></li>
         </ul>
