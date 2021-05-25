@@ -7,7 +7,7 @@ const initialState = {
     ...config,
     isFullScreen: false, // static can't change
 };
-
+/*can be added to this reducer */
 const reducer = (state = initialState, action) => {
     let trigger = [];
     let open = [];
@@ -83,6 +83,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 layout: action.layout
             };
+
+        case actionTypes.GET_USERS:
+            return {
+                ...state,
+                token:action.payload,
+            }
         default:
             return state;
     }

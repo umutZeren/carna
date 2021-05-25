@@ -3,6 +3,13 @@ import { createContext } from "react";
 import React, {useState,useEffect} from 'react'
 import axios from 'axios'
 //import { response } from "express";
+import {getUsers} from "../Demo/Login/TokenAction";
+import t from "../Demo/Login/Login"
+import {connect} from 'react-redux'
+
+
+
+
 
 export const  UserContext = createContext();
 
@@ -10,12 +17,19 @@ const UserContextProvider = (props) =>{
 
     //get all users list via db on the cloud using rest-api via axios
     const  [users, setUsers]=useState();
+    let tk =window.localStorage.getItem("token");
 
+    var config = {
+      headers: {
+        "Authorization":"Token "+tk,
+      }
+    }
+    
   let url='https://db-users.herokuapp.com/rest-api/users/';
-       /* if(!isAll)
-            url+=`${index}/`*/
+       
         useEffect( ()=>{
-                axios.get(url)
+              console.log((t));
+                axios.get(url,config)
                 .then(response=> setUsers(response.data))
                 .catch(error=> console.log(error));
             },[]);
@@ -27,7 +41,7 @@ const UserContextProvider = (props) =>{
             "password": "defaultpass",
             "gender": gender,
             "age": age,
-            "email": email}).then(response=> {
+            "email": email},config).then(response=> {
               window.location.reload();
             }).catch((error) => {
               if(error.response)
@@ -36,9 +50,8 @@ const UserContextProvider = (props) =>{
            });
         
            const  deleteUsers=((id) => {
-            console.log("inside delte bro,id", id);
             setUsers(users,
-            axios.delete(url+`${id}/`)
+            axios.delete(url+`${id}/`,config)
             .then(response=> {
               window.location.reload();
             })
@@ -48,7 +61,7 @@ const UserContextProvider = (props) =>{
           const  updateUser=((user) => {
             
             setUsers(users,
-            axios.put(url+`${user.id}/`,user)
+            axios.put(url+`${user.id}/`,user,config)
             .then(response=> {
               window.location.reload();
             })
@@ -62,4 +75,10 @@ const UserContextProvider = (props) =>{
 
 }
 
+
+
+
+//const mapStateToProps  = (state) => ({token:state.token})
+
+//export default connect(mapStateToProps, {getUsers})(UserContextProvider)
 export default UserContextProvider;

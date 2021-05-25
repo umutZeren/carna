@@ -23,7 +23,7 @@ export default {
             children: [
                 {
                     id: 'basic',
-                    title: 'Component',
+                    title: 'Manage/:x',
                     type: 'collapse',
                     icon: 'feather icon-box',
                     children: [

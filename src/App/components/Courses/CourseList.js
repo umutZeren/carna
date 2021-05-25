@@ -49,7 +49,6 @@ const CourseList=() =>{
     const indexOfFirstEmployee = indexOfLastEmployee - employeesPerPage;
     const currentcourses= courses.slice(indexOfFirstEmployee, indexOfLastEmployee);
     const totalPagesNum = Math.ceil(courses.length / employeesPerPage);
-    console.log("whaat !!",courses, totalPagesNum);
     
     return(
 

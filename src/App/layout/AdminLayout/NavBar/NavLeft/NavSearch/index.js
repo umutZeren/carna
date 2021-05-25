@@ -4,7 +4,7 @@ import windowSize from 'react-window-size';
 import Aux from "../../../../../../hoc/_Aux";
 import DEMO from "../../../../../../store/constant";
 
-class NavSearch extends Component {
+class NavSearch extends Component{
     state = {
         searchWidth: (this.props.windowWidth < 992) ? 90 : 0,
         searchString: (this.props.windowWidth < 992) ? '90px' : '',

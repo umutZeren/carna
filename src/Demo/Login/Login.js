@@ -1,43 +1,31 @@
 
 import React, { useState ,Suspense} from 'react';
-import { Switch, Route } from 'react-router-dom';
 import { Grid,Paper, Avatar, TextField, Button, Typography,Link } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import axios from 'axios';
-import Loader from '../../App/layout/Loader/';
-import Loadable from 'react-loadable';
-import routes from '../../routes';
+import  { getUsers } from "./TokenAction";
+import {connect} from 'react-redux'
+import Loader from '../../App/layout/Loader'
 import Aux from "../../hoc/_Aux";
-import ScrollToTop from "../../App/layout/ScrollToTop";
+import ScrollToTop from '../../App/layout/ScrollToTop'
+import routes from "../../route";
+import Loadable from 'react-loadable';
 
+import { Switch, Route } from 'react-router-dom';
 
-const Login=()=>{
-    const menu = routes.map((route, index) => {
-        return (route.component) ? (
-            <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                name={route.name}
-                render={props => (
-                    <route.component {...props} />
-                )} />
-        ) : (null);
-      });
-    
-const AdminLayout = Loadable({
+const AdminLayout= Loadable({
     loader: () => import('../../App/layout/AdminLayout'),
     loading: Loader
 });
-    let label="username";
+
+const Login=(props)=>{
     const paperStyle={padding :20,height:'60vh',width:280, margin:"80px auto"}
     const avatarStyle={backgroundColor:'#1bbd7e'}
     const btnstyle={margin:'8px 0'}
     const [username,setVal]=useState("");
     const handleChange= e =>{
-        label="";
         console.log(e.target.value)
         setVal(e.target.value)
     }
@@ -45,9 +33,19 @@ const AdminLayout = Loadable({
     const handleChangePass= e =>{
         console.log(e.target.value);
         setPas(e.target.value);
+        
     }
     const [token,setToken]=useState(null);  
- 
+    const redirect=()=>{
+       // props.getUsers(token); 
+      let tk= window.localStorage.getItem("token")
+        axios.defaults.headers.common['Authorization'] =
+        `Token ${tk}`;
+
+        props.method(true);
+    };
+  
+    
     const url="https://db-users.herokuapp.com/api-token-auth/";
     const handleSıgnIn=(()=>{
         return new Promise(function(resolve, reject) {
@@ -56,27 +54,47 @@ const AdminLayout = Loadable({
          )
         .then(response=> {
             resolve(response);
-            setToken(response.data);
-        })
+           setToken(response.data);
+           window.localStorage.setItem('token',response.data["token"]);})
+        .then(redirect())
         .catch(error=> console.log(error));
         }
-    )});
-    if(token != null)
-    return( 
+    )
+    
       
+});//promise end
+const menu = routes.map((route, index) => {
+    return (route.component) ? (
+        <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            name={route.name}
+            render={props => (
+                <route.component {...props} />
+            )} />
+    ) : (null);
+  });
 
+    if(token)
+    {
+
+        return (
             <Aux>
-                <ScrollToTop>
-                    <Suspense fallback={<Loader/>}>
-                        <Switch>
-                            {menu}
-                            <Route path="/" component={AdminLayout} />
-                        </Switch>
-                    </Suspense>
-                </ScrollToTop>
-            </Aux>
-        )
-    else{
+            <ScrollToTop>
+                <Suspense fallback={<Loader/>}>
+                    <Switch>
+                        {menu}
+                        <Route>
+                            <AdminLayout isOk={true} />
+                        </Route>
+                    </Switch>
+                </Suspense>
+            </ScrollToTop>
+        </Aux>
+        );
+    
+    }
     return(
         <Grid>
             <Paper elevation={10} style={paperStyle}>
@@ -98,7 +116,14 @@ const AdminLayout = Loadable({
                 <Button  type='submit' color='primary' variant="contained"  onClick={handleSıgnIn} style={btnstyle} fullWidth>Sign in</Button>
             </Paper>
         </Grid>
-    )}
+    )
+
 }
 
-export default Login;
+
+
+
+
+const mapStateToProps  = (state) => ({token:state.token})
+
+export default connect(mapStateToProps, {getUsers})(Login)

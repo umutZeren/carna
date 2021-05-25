@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 const Pagination = ({pages, setCurrentPage, currentUsers, users}) => {
 
     const numOfPages = [];
-    console.log("users",users );
 
     for (let i=1; i <= pages; i++) {
         numOfPages.push(i);

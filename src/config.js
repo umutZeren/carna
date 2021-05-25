@@ -1,5 +1,10 @@
 export default {
     defaultPath: '/dashboard/default',
+    basename: '/datta-able/react/default',
+    reLayout: null,
+    navBackImage: false,
+    headerFixedLayout: false,
+    headerFixedLayout: false,
     basename: '/takehome', // only at build time to set, like /datta-able
     layout: 'vertical', // vertical, horizontal (not available in lite version)
     collapseMenu: false, // mini-menu

@@ -1,9 +1,9 @@
 import React, { Component, Suspense } from 'react';
-import {Route, Switch, Redirect} from 'react-router-dom';
+import {Route, Switch, Redirect, BrowserRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import Fullscreen from "react-full-screen";
 import windowSize from 'react-window-size';
-
+import Login from '../../../Demo/Login/Login';
 import Navigation from './Navigation';
 import NavBar from './NavBar';
 import Breadcrumb from './Breadcrumb';
@@ -15,7 +15,17 @@ import * as actionTypes from "../../../store/actions";
 import './app.scss';
 
 class AdminLayout extends Component {
+    constructor(props)
+    {
+        console.log("admin constructor")
+        super(props);
+        this.state={
+            isOk:false
 
+        }
+
+    }
+    
     fullScreenExitHandler = () => {
         if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
             this.props.onFullScreenExit();
@@ -54,13 +64,37 @@ class AdminLayout extends Component {
                     )} />
             ) : (null);
         });
-        var login=false;
+        function clearStorage() {
+
+            let session = sessionStorage.getItem('ref');
+        
+            if (session == null) {
+        
+                    window.localStorage.clear();
+            }
+            sessionStorage.setItem('ref', 1);
+        }
+        window.addEventListener('load', clearStorage);
+        const calback=(is)=>{
+            this.setState({isOk:true})
+
+            window.localStorage.setItem('isIn', {"in":"true"});
+
+        }
+        let w=window.localStorage.getItem('isIn');
+
+        if(!w)
+        {
+            return(<Login method={calback}/>);
+
+        }
+       else{              
+
         return (
-           /* <Login> </Login>*/
             <Aux>
                 <Fullscreen enabled={this.props.isFullScreen}>
                     <Navigation />
-                    <NavBar />)
+                    <NavBar /> 
                 
                     <div className="pcoded-main-container" onClick={() => this.mobileOutClickHandler}>
                         <div className="pcoded-wrapper">
@@ -83,7 +117,7 @@ class AdminLayout extends Component {
                     </div>
                 </Fullscreen>
             </Aux>
-        );
+        );}
     }
 }
 
@@ -93,7 +127,9 @@ const mapStateToProps = state => {
         isFullScreen: state.isFullScreen,
         collapseMenu: state.collapseMenu,
         configBlock: state.configBlock,
-        layout: state.layout
+        layout: state.layout,
+        token:state.token
+
     }
 };
 
